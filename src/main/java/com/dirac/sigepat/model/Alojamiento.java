@@ -24,7 +24,7 @@ public class Alojamiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long idAlojamiento;
     @Column(name = "precio")
     private double precio;
     @Column(name = "cancelable")

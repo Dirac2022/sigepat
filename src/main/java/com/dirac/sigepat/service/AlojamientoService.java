@@ -29,7 +29,7 @@ public class AlojamientoService {
      */
     
     // GET
-    public Optional<Alojamiento> getAlojamiento(Long id) {
+    public Optional<Alojamiento> findAlojamientoById(Long id) {
         return alojamientoRepository.findById(id);
     }
     
