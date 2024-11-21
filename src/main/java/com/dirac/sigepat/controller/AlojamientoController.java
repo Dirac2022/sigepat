@@ -7,6 +7,7 @@ package com.dirac.sigepat.controller;
 import com.dirac.sigepat.service.AlojamientoService;
 import com.dirac.sigepat.model.Alojamiento;
 import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,19 @@ public class AlojamientoController {
         }
         
         return new ResponseEntity<>(listaAlojamientos, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value="find", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Optional<Alojamiento>> getAlojamiento(Long id) {
+        Optional<Alojamiento> alojamiento = null;
+        try {
+            alojamiento = alojamientoService.getAlojamiento(id);
+        } catch (Exception e) {
+            logger.error("Error inesperado ", e);
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+        
+        return new ResponseEntity<>(alojamiento, HttpStatus.OK);
     }
     
 }
