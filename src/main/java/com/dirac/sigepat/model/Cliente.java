@@ -4,6 +4,7 @@
  */
 package com.dirac.sigepat.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,14 +29,23 @@ import lombok.NoArgsConstructor;
 public class Cliente {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id_cliente;
+    @Column(name="id_cliente")
+    private Long idCliente;
+    @Column(name="nombres")
     private String nombres;
-    private String apellido_paterno;
-    private String apellido_materno;
-    private Date fecha_nac;
+    @Column(name="apellido_paterno")
+    private String apePaterno;
+    @Column(name="apellido_materno")
+    private String apeMaterno;
+    @Column(name="fecha_nac")
+    private Date fechaNac;
+    @Column(name="sexo")
     private String sexo;
+    @Column(name="email")
     private String email;
-    private String numcelular;
-    private String password_cliente;
+    @Column(name="numcelular")
+    private String numCelular;
+    @Column(name="password_cliente")
+    private String passwordliente;
     
 }
