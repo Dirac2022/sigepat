@@ -38,7 +38,9 @@ public class AlojamientoController {
     
     //@RequestMapping(value="listar", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @GetMapping()  // se entiende que al hacer una llamada GET se debe llamar a getAlojamientos
-    public ResponseEntity<?> getAlojamientos() { // En vez de precisar el tipo, usamos ? ya que no queremos definir el objeto
+    public ResponseEntity<?> getAlojamientos() { 
+        // En vez de precisar el tipo, usamos ? ya que no queremos definir 
+        // explicitamente el tipo de retorno
         List<Alojamiento> listaAlojamientos = null;
         try {
             listaAlojamientos = alojamientoService.getAlojamientos();
@@ -117,5 +119,5 @@ public class AlojamientoController {
         }        
         return ResponseEntity.ok(alojamiento.get());
     }
-    
+   
 }
