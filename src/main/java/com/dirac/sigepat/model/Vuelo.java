@@ -4,14 +4,15 @@
  */
 package com.dirac.sigepat.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,35 +22,33 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="vuelo")
-public class Vuelo {
-    
+@Table(name = "vuelo")
+public class Vuelo extends Servicio {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_vuelo")
     private Long idVuelo;
-    @Column(name = "precio")
-    private Long precio;
-    @Column(name = "cancelable")
-    private boolean cancelable;
-    @Column(name = "modificable")
-    private boolean modificable;
+
     @Column(name = "fechahora_ida")
     private LocalDateTime fechaHoraIda;
+
     @Column(name = "fechahora_regreso")
     private LocalDateTime fechaHoraRegreso;
+
     @Column(name = "clase")
     private Long clase;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="aeropuerto_ida", referencedColumnName="id_aeropuerto")
+    @JoinColumn(name = "aeropuerto_ida", referencedColumnName = "id_aeropuerto")
     private Aeropuerto aeropuertoIda;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="aeropuerto_regreso", referencedColumnName="id_aeropuerto")
+    @JoinColumn(name = "aeropuerto_regreso", referencedColumnName = "id_aeropuerto")
     private Aeropuerto aeropuertoRegreso;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="aerolinea", referencedColumnName="id_aerolinea")
+    @JoinColumn(name = "aerolinea", referencedColumnName = "id_aerolinea")
     private Aerolinea aerolinea;
 }
+

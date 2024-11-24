@@ -4,12 +4,12 @@
  */
 package com.dirac.sigepat.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,29 +18,30 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="alojamiento")
-public class Alojamiento {
-    
+@Table(name = "alojamiento")
+public class Alojamiento extends Servicio {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_alojamiento")
     private Long idAlojamiento;
-    @Column(name = "precio")
-    private double precio;
-    @Column(name = "cancelable")
-    private boolean cancelable;
-    @Column(name = "modificable")
-    private boolean modificable;
+
     @Column(name = "nombre")
     private String nombre;
+
     @Column(name = "ciudad")
     private String ciudad;
+
     @Column(name = "direccion")
     private String direccion;
+
     @Column(name = "clasificacion")
     private int clasificacion;
+
     @Column(name = "habitacion_ind_disponible")
     private int habIndDisponibles;
+
     @Column(name = "habitacion_dob_disponible")
     private int habDobDisponibles;
 }
+

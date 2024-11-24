@@ -4,13 +4,14 @@
  */
 package com.dirac.sigepat.repository;
 
-import com.dirac.sigepat.model.Alojamiento;
+import com.dirac.sigepat.model.Habitacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AlojamientoRepository extends JpaRepository<Alojamiento, Long>  {
+public interface HabitacionRepository extends JpaRepository<Habitacion, Long> {
     
 }
+
 
 
