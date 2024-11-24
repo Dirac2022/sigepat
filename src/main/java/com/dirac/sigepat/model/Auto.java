@@ -25,6 +25,8 @@ public class Auto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_auto")
     private Long idAuto;
+    @Column(name = "matricula")
+    private String matricula;
     @Column(name = "tipo_auto")
     private String tipoAuto;
     @Column(name = "marca")
@@ -33,8 +35,8 @@ public class Auto {
     private String modelo;
     @Column(name = "capacidad")
     private Long capacidad;
-    @Column(name = "aeropuerto")
-    private Long aeropuerto;
     @Column(name = "disponible")
     private boolean disponible;
+
 }
+
