@@ -7,9 +7,12 @@ package com.dirac.sigepat.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,22 +29,15 @@ public class Alojamiento extends Servicio {
     @Column(name = "id_alojamiento")
     private Long idAlojamiento;
 
-    @Column(name = "nombre")
-    private String nombre;
-
-    @Column(name = "ciudad")
-    private String ciudad;
-
-    @Column(name = "direccion")
-    private String direccion;
-
-    @Column(name = "clasificacion")
-    private int clasificacion;
-
-    @Column(name = "habitacion_ind_disponible")
-    private int habIndDisponibles;
-
-    @Column(name = "habitacion_dob_disponible")
-    private int habDobDisponibles;
+    @Column(name = "noches")
+    private int noches;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "hotel", referencedColumnName = "id_hotel")
+    private Hotel hotel;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "habitacion", referencedColumnName = "id_habitacion")
+    private Habitacion habitacion;
 }
 

@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import com.dirac.sigepat.model.Alojamiento;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.dirac.sigepat.model.Hotel;
+import com.dirac.sigepat.model.Habitacion;
 
 
 @Data
@@ -25,12 +27,10 @@ public class AlojamientoResponse {
     private double precio;
     private boolean cancelable;
     private boolean modificable;
-    private String nombre;
-    private String ciudad;
-    private String direccion;
-    private int clasificacion;
-    private int habIndDisponibles;    
-    private int habDobDisponibles;
+    private int noches;
+    private Hotel hotel;
+    private Habitacion habitacion;
+    
     
     public static AlojamientoResponse fromEntity(Alojamiento alojamiento) {
         return AlojamientoResponse.builder()
@@ -38,12 +38,9 @@ public class AlojamientoResponse {
                 .precio(alojamiento.getPrecio())
                 .cancelable(alojamiento.isCancelable())
                 .modificable(alojamiento.isModificable())
-                .nombre(alojamiento.getNombre())
-                .ciudad(alojamiento.getCiudad())
-                .direccion(alojamiento.getDireccion())
-                .clasificacion(alojamiento.getClasificacion())
-                .habIndDisponibles(alojamiento.getHabIndDisponibles())
-                .habDobDisponibles(alojamiento.getHabDobDisponibles())
+                .noches(alojamiento.getNoches())
+                .hotel(alojamiento.getHotel())
+                .habitacion(alojamiento.getHabitacion())
                 .build();
     }
     

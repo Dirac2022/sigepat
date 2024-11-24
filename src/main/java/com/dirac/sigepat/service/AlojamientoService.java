@@ -6,8 +6,15 @@ package com.dirac.sigepat.service;
 
 import com.dirac.sigepat.repository.AlojamientoRepository;
 import com.dirac.sigepat.model.Alojamiento;
+import com.dirac.sigepat.model.Habitacion;
+import com.dirac.sigepat.repository.HabitacionRepository;
+import com.dirac.sigepat.repository.HotelRepository;
+import com.dirac.sigepat.dto.AlojamientoRequest;
+import com.dirac.sigepat.dto.AlojamientoResponse;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,36 +22,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class AlojamientoService {
     
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
     @Autowired // Se esta aplicando el patron inyección de dependencia
     AlojamientoRepository alojamientoRepository;
     
-    public List<Alojamiento> getAlojamientos() {
-        return alojamientoRepository.findAll();
+    @Autowired
+    HotelRepository hotelRepository;
+    
+    @Autowired
+    HabitacionRepository habitacionRepository;
+    
+    
+    public List<AlojamientoResponse> listAlojamientos() {
+        return AlojamientoResponse.fromEntities(alojamientoRepository.findAll());
     }
     
-    /**
-     * El tipo Optional es seguro 
-     * @param id
-     * @return 
-     */
-    
-    // GET
-    public Optional<Alojamiento> findAlojamientoById(Long id) {
-        return alojamientoRepository.findById(id);
+    public AlojamientoResponse findAlojamiento(Long id) {
+        return AlojamientoResponse.fromEntity(alojamientoRepository.findById(id).get());
     }
     
-    // POST
-    public Alojamiento insertAlojamiento(Alojamiento alojamiento) {
-        return alojamientoRepository.save(alojamiento);
-    }
-    
-    // PUT
-    public Alojamiento updateAlojamiento(Alojamiento alojamiento) {
-        return alojamientoRepository.save(alojamiento);
-    }
-    
-    // DELETE
-    public void deleteAlojamiento(Long id) {
-        alojamientoRepository.deleteById(id);
-    }
 }

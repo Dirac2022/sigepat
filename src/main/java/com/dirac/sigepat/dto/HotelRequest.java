@@ -13,15 +13,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlojamientoRequest {
+public class HotelRequest {
     
-    private Long idAlojamiento;    
-    private double precio;
-    private boolean cancelable;
-    private boolean modificable;
-    private int noches;
-    private Long hotel;
-    private Long habitacion;
-    
+    private Long idHotel;
+    private String nombre;
+    private String direccion;
+    private int clasificacion;
+    private int habitIndDisponibles;
+    private int habitDobDisponibles;
+    private Long ciudad;
 }
-
