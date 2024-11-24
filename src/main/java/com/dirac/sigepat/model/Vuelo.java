@@ -10,9 +10,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -23,24 +26,30 @@ public class Vuelo {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "nro_vuelo")
-    private Long nroVuelo;
+    @Column(name = "id_vuelo")
+    private Long idVuelo;
     @Column(name = "precio")
-    private Long Precio;
+    private Long precio;
     @Column(name = "cancelable")
-    private boolean Cancelable;
+    private boolean cancelable;
     @Column(name = "modificable")
-    private boolean Modificable;
-    @Column(name = "lugar_origen")
-    private String lugarOrigen;
-    @Column(name = "lugar_destino")
-    private String lugarDestino;
-    @Column(name = "fecha_hora_ida")
-    private String fechaHoraIda;
-    @Column(name = "fecha_origen_regreso")
-    private String fechaOrigenRegreso;
+    private boolean modificable;
+    @Column(name = "fechahora_ida")
+    private LocalDateTime fechaHoraIda;
+    @Column(name = "fechahora_regreso")
+    private LocalDateTime fechaHoraRegreso;
     @Column(name = "clase")
-    private Long Clase;
-    @Column(name = "aerolinea")
-    private boolean Aerolinea;
+    private Long clase;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="aeropuerto_ida", referencedColumnName="id_aeropuerto")
+    private Aeropuerto aeropuertoIda;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="aeropuerto_regreso", referencedColumnName="id_aeropuerto")
+    private Aeropuerto aeropuertoRegreso;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="aerolinea", referencedColumnName="id_aerolinea")
+    private Aerolinea aerolinea;
 }
