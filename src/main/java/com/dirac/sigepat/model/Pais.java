@@ -32,6 +32,6 @@ public class Pais {
     @Column(name="nombre", nullable=false)
     private String nombre;
     
-    @Column(name="id_aliaspais", nullable=false)
+    @Column(name="alias", nullable=false)
     private String alias;
 }

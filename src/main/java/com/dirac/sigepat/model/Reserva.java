@@ -9,15 +9,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- *
- * @author mitch
- */
 
 @Data
 @Entity
@@ -36,6 +33,7 @@ public class Reserva {
     @Column(name = "fechaReserva")
     private LocalDate fechaReserva;
     
+    @Transient // Este campo no será mapeado a la base de datos.
     private Servicio servicio;
     
 }

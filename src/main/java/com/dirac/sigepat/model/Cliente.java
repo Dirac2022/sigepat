@@ -16,11 +16,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
-/**
- *
- * @author mitch
- */
 @Data
 @Entity
 @NoArgsConstructor
