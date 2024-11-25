@@ -39,6 +39,12 @@ public class HotelService {
                 .collect(Collectors.toList());
     }
     
+    public Ciudad findCiudadById(Long idCiudad) {
+    return ciudadRepository.findById(idCiudad)
+            .orElseThrow(() -> new IllegalArgumentException("City not found"));
+}
+
+    
    
     public HotelResponse findHotel(Long id) {
         return HotelResponse.fromEntity(hotelRepository.findById(id).get());

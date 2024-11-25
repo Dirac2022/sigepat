@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.dirac.sigepat.dto.HotelRequest;
 import com.dirac.sigepat.dto.HotelResponse;
+import com.dirac.sigepat.model.Ciudad;
 import com.dirac.sigepat.model.Hotel;
 import com.dirac.sigepat.service.HotelService;
 import com.dirac.sigepat.utils.ErrorResponse;
@@ -23,67 +24,98 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
-@RequestMapping(path="api/v1/hotel")
+@RequestMapping(path = "api/v1/hotel")
 public class HotelController {
-    
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    
+
     @Autowired
     HotelService hotelService;
-    
+
     @GetMapping()
     public ResponseEntity<?> getHoteles() {
         List<HotelResponse> listaHotelesResponse = null;
-        
+
         try {
             listaHotelesResponse = hotelService.listHoteles();
         } catch (Exception e) {
             logger.error("Error inesperado", e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        if (listaHotelesResponse.isEmpty())
+
+        if (listaHotelesResponse.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.builder().message("Hoteles not found").build());
-        
+        }
+
         return ResponseEntity.ok(listaHotelesResponse);
     }
-    
-    
+
     @GetMapping("/find")
-        public ResponseEntity<?> findPersonaById(@RequestBody Optional<HotelRequest> hotelRequest){
-        logger.info(">find" +  hotelRequest.toString());
+    public ResponseEntity<?> findHotelById(@RequestBody Optional<HotelRequest> hotelRequest) {
+        logger.info(">find" + hotelRequest.toString());
         HotelResponse hotelResponse;
-        try{
+        try {
             hotelResponse = hotelService.findHotel(hotelRequest.get().getIdHotel());
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.error("Error inesperado", e);
-            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        if (hotelResponse==null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.builder().message("Hotel not found").build());           
-        return ResponseEntity.ok(hotelResponse);        
-        
+        if (hotelResponse == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.builder().message("Hotel not found").build());
+        }
+        return ResponseEntity.ok(hotelResponse);
+
     }
-        
-    
-    @PostMapping()
-    public ResponseEntity<?> insertHotel(@RequestBody HotelRequest hotelRequest){
-        logger.info(">insert" +  hotelRequest.toString());
-        HotelResponse hotelResponse;
-        try{            
-            hotelResponse = hotelService.insertHotel(hotelRequest);
-        }catch(Exception e){
+
+    @GetMapping("/findByCity")
+    public ResponseEntity<?> findHotelsByCity(@RequestBody Optional<HotelRequest> hotelRequest) {
+        logger.info(">findHotelsByCity " + hotelRequest.toString());
+        List<HotelResponse> hotelResponses;
+
+        try {
+            // Obtén el ID de la ciudad desde el request
+            Long idCiudad = hotelRequest.map(HotelRequest::getCiudad).orElse(null);
+
+            if (idCiudad == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(ErrorResponse.builder().message("Ciudad ID is required").build());
+            }
+
+            // Encuentra la entidad Ciudad en el repositorio
+            Ciudad ciudad = hotelService.findCiudadById(idCiudad);
+
+            // Llama al método que busca hoteles por ciudad
+            hotelResponses = hotelService.findHotelesByCiudad(ciudad);
+
+            if (hotelResponses.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(ErrorResponse.builder().message("No hotels found in the given city").build());
+            }
+
+            return ResponseEntity.ok(hotelResponses);
+        } catch (Exception e) {
             logger.error("Error inesperado", e);
-            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        if (hotelResponse == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.builder().message("Hotel not insert").build());           
-        return ResponseEntity.ok(hotelResponse);        
-    } 
-         
-    
+    }
+
+    @PostMapping()
+    public ResponseEntity<?> insertHotel(@RequestBody HotelRequest hotelRequest) {
+        logger.info(">insert" + hotelRequest.toString());
+        HotelResponse hotelResponse;
+        try {
+            hotelResponse = hotelService.insertHotel(hotelRequest);
+        } catch (Exception e) {
+            logger.error("Error inesperado", e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        if (hotelResponse == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.builder().message("Hotel not insert").build());
+        }
+        return ResponseEntity.ok(hotelResponse);
+    }
+
 }
 
 /*
