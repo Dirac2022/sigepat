@@ -34,17 +34,10 @@ public class HabitacionResponse {
                 .build();
     }
     
-    private static List<HabitacionResponse> fromEntities(List<Habitacion> habitacion) {
+    public static List<HabitacionResponse> fromEntities(List<Habitacion> habitacion) {
         return habitacion.stream()
                 .map(HabitacionResponse::fromEntity)
                 .collect(Collectors.toList());
     }
 }
 
-/*
-    public static List<PersonaResponse> fromEntities(List<Persona> persona) {
-        return persona.stream()
-                .map(PersonaResponse::fromEntity)
-                .collect(Collectors.toList());
-    }
-*/

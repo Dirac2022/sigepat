@@ -40,5 +40,5 @@ public class Habitacion {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="hotel", referencedColumnName = "id_hotel")
     private Hotel hotel;
-    
+   
 }

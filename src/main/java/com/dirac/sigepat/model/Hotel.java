@@ -19,17 +19,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@Data
+// @Data: Lombok, genera automaticamente los metodos getters, setters, 
+// toString(), equals() y hashCode()
+// @Entity:  Marca la clase como una entidad de JPA, 
+// esta mapeada a una tabla de base de datos
+// @Builder: Lombok, permite la creacion de objetos Hotel mediante un patron 
+
+@Data 
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name="hotel")
+@Builder 
+@NoArgsConstructor // Genera constructores sin parametros
+@AllArgsConstructor // Genera constructores con todos los parametros
+@Table(name="hotel") // De JPA, especifica el nombre de la tabla en la base de datos
 public class Hotel {
     
-    @Id
+    // @Id: Indica que el campo es una primary key
+    // @GeneratedValue: // Indica que la bd es la encargada de generar el valor 
+    // del identificador automaticamente
+    // @Column: Asocia el campo de clase con la columna especificada en 
+    // name de la tabla. nullable indica que esta columna no puede
+    // ser NULL
+    @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_hotel", nullable = false)
+    @Column(name="id_hotel", nullable = false) // 
     private Long idHotel;
     
     @Column(name="nombre", nullable = false)
@@ -47,6 +59,13 @@ public class Hotel {
     @Column(name="habit_dob_disponibles", nullable = false)
     private int habitDobDisponibles;
     
+    // @ManyToOneDefine una relacion de muchos a uno entre Hotel y Ciudad.
+    // fetch = FetchType.EAGER indica que la ciudad asociada se cargara
+    // de manera inmediata (eager fetching). Cuando se carga un hotel, 
+    // Spring tambien cargara su ciudad automaticamente
+    // @JoinColumn especifica la columna en la tabla hotel, que se
+    // usara para la relacion con la tabla ciudad. La columna ciudad en hotel
+    // hace referencia a la columna id_ciudad en la tabla ciudad
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ciudad", referencedColumnName = "id_ciudad")
     private Ciudad ciudad;
