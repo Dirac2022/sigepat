@@ -36,12 +36,17 @@ public class Vuelo extends Servicio {
     @Column(name = "fechahora_regreso")
     private LocalDateTime fechaHoraRegreso;
 
-    @Column(name = "clase")
-    private Long clase;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ciudad_origen", referencedColumnName = "id_ciudad")
+    private Ciudad cuidadOrigen;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "aeropuerto_ida", referencedColumnName = "id_aeropuerto")
     private Aeropuerto aeropuertoIda;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ciudad_destino", referencedColumnName = "id_ciudad")
+    private Ciudad ciudadDestino;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "aeropuerto_regreso", referencedColumnName = "id_aeropuerto")
