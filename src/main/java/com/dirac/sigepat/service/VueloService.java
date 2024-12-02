@@ -11,7 +11,9 @@ import com.dirac.sigepat.model.Vuelo;
 import com.dirac.sigepat.repository.AerolineaRepository;
 import com.dirac.sigepat.repository.AeropuertoRepository;
 import com.dirac.sigepat.repository.CiudadRepository;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -56,24 +58,37 @@ public class VueloService {
     } 
     
     
-    public List<VueloResponse> findVuelosByCiudades(Long idCiudadOrigen, Long idCiudadDestino) {
-        Ciudad ciudadOrigen = ciudadRepository.findById(idCiudadOrigen).get();
-        Ciudad ciudadDestino = ciudadRepository.findById(idCiudadDestino).get();
+    public List<VueloResponse> findVuelosByCiudades(
+            Long idCiudadOrigen, 
+            Long idCiudadDestino,
+            LocalDate fechaIda,
+            LocalDate fechaRegreso) {
         
+        // Ciudad ciudadOrigen = ciudadRepository.findById(idCiudadOrigen).get();
+        // Ciudad ciudadDestino = ciudadRepository.findById(idCiudadDestino).get();
+        
+        Ciudad ciudadOrigen = ciudadRepository.findById(idCiudadOrigen).orElseThrow(() -> new RuntimeException("Ciudad origen no encontrada"));
+        Ciudad ciudadDestino = ciudadRepository.findById(idCiudadDestino).orElseThrow(() -> new RuntimeException("Ciudad destino no encontrada"));
+        
+        LocalDateTime fechaHoraIdaInicio = fechaIda.atStartOfDay();
+        LocalDateTime fechaHoraIdaFin = fechaIda.atTime(LocalTime.MAX);
+        
+        LocalDateTime fechaHoraRegresoInicio = fechaRegreso.atStartOfDay();
+        LocalDateTime fechaHoraRegresoFin = fechaRegreso.atTime(LocalTime.MAX);
+        
+        // Filtrar los vuelos que están dentro del rango de fechas
         List<Vuelo> vuelos = vueloRepository.findAll().stream()
-                .filter(vuelo -> vuelo.getCuidadOrigen().equals(ciudadOrigen) 
-                        && vuelo.getCiudadDestino().equals(ciudadDestino))
-                .collect(Collectors.toList());
+            .filter(vuelo -> vuelo.getCuidadOrigen().equals(ciudadOrigen)
+                    && vuelo.getCiudadDestino().equals(ciudadDestino)
+                    && vuelo.getFechaHoraIda().isAfter(fechaHoraIdaInicio) 
+                    && vuelo.getFechaHoraIda().isBefore(fechaHoraIdaFin)
+                    && vuelo.getFechaHoraRegreso().isAfter(fechaHoraRegresoInicio)
+                    && vuelo.getFechaHoraRegreso().isBefore(fechaHoraRegresoFin))
+            .collect(Collectors.toList());
         
         return VueloResponse.fromEntities(vuelos);
     }
-    
-    
-    
-    
-    
-    
-    
+   
     
     public VueloResponse insertVuelo(VueloRequest vueloRequest) {
 

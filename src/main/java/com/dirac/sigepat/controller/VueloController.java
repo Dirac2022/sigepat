@@ -4,27 +4,24 @@
  */
 package com.dirac.sigepat.controller;
 
-import com.dirac.sigepat.dto.HotelRequest;
-import com.dirac.sigepat.dto.HotelResponse;
+
 import com.dirac.sigepat.dto.VueloRequest;
 import com.dirac.sigepat.dto.VueloResponse;
-import com.dirac.sigepat.model.Ciudad;
 import com.dirac.sigepat.service.VueloService;
-import com.dirac.sigepat.model.Vuelo;
 import com.dirac.sigepat.utils.ErrorResponse;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -91,17 +88,25 @@ public class VueloController {
     
     
     // Buscar vuelos por ciudad de origen y destino
-    @GetMapping("/findByCiudades")
-    public ResponseEntity<?> findVuelosByCiudades(@RequestBody VueloRequest vueloRequest) {
-        logger.info(">findVuelosByCiudades " + vueloRequest.toString());
+    @GetMapping("/findByCiudadesFechas")
+    public ResponseEntity<?> findVuelosByCiudades(
+            @RequestParam Long ciudadOrigen,
+            @RequestParam Long ciudadDestino,
+            @RequestParam LocalDate fechaIda,
+            @RequestParam LocalDate fechaRegreso) {
+        logger.info(">findVuelosByCiudadesFechas " + fechaIda + "-" + fechaRegreso);
         List<VueloResponse> vueloResponse;
 
         try {
-            vueloResponse = vueloService.findVuelosByCiudades(vueloRequest.getCuidadOrigen(), vueloRequest.getCiudadDestino());
+            vueloResponse = vueloService.findVuelosByCiudades(
+                    ciudadOrigen, 
+                    ciudadDestino,
+                    fechaIda,
+                    fechaRegreso);
             
             if (vueloResponse.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ErrorResponse.builder().message("Vuelos not found for the cities entered").build());
+                        .body(ErrorResponse.builder().message("Vuelos not found for the cities and dates entered").build());
             }
 
             return ResponseEntity.ok(vueloResponse);
