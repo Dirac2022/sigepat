@@ -11,8 +11,8 @@ import com.dirac.sigepat.repository.HabitacionRepository;
 import com.dirac.sigepat.repository.HotelRepository;
 import com.dirac.sigepat.dto.AlojamientoRequest;
 import com.dirac.sigepat.dto.AlojamientoResponse;
+import com.dirac.sigepat.model.Hotel;
 import java.util.List;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +42,38 @@ public class AlojamientoService {
         return AlojamientoResponse.fromEntity(alojamientoRepository.findById(id).get());
     }
     
+    
+    public AlojamientoResponse insertAlojamiento(AlojamientoRequest alojamientoRequest) {
+        
+        Long idHotel = alojamientoRequest.getHotel();
+        Long idHabitacion = alojamientoRequest.getHabitacion();
+        
+        Hotel hotel = hotelRepository.findById(idHotel).get();
+        Habitacion habitacion = habitacionRepository.findById(idHabitacion).get();
+        
+        logger.info("InsertAlojamiento" + "Hotel: " +
+                hotel.toString() + "/Habitacion: " + habitacion.toString());
+        
+        double precio = habitacion.getPrecioDia() * (double)alojamientoRequest.getNoches();
+        
+        
+       Alojamiento alojamiento = new Alojamiento(
+               null, 
+               precio,
+               hotel.isCancelable(), 
+               hotel.isModificable(), 
+               alojamientoRequest.getNoches(), 
+               hotel, 
+               habitacion
+       );
+       
+       alojamiento = alojamientoRepository.save(alojamiento);
+       
+       AlojamientoResponse alojamientoResponse = AlojamientoResponse.fromEntity(alojamiento);
+       
+       return alojamientoResponse;
+               
+   }
+    
 }
+

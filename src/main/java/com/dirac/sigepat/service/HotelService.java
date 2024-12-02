@@ -126,7 +126,9 @@ public class HotelService {
                 hotelRequest.getClasificacion(),
                 hotelRequest.getHabitIndDisponibles(),
                 hotelRequest.getHabitIndDisponibles(),
-                ciudad
+                ciudad,
+                hotelRequest.isCancelable(),
+                hotelRequest.isModificable()
         );
         
         // save() guarda el hotel en la bd a traves del hotelRepository

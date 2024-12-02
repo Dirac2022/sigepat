@@ -9,19 +9,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlojamientoRequest {
+public class CiudadRequest {
     
-    private Long idAlojamiento; 
-    private double precio;
-    private boolean cancelable;
-    private boolean modificable;
-    private int noches;
-    private Long hotel;
-    private Long habitacion;
+    private Long idCiudad;
+    private String nombre;
+    private Long pais;
     
 }
-

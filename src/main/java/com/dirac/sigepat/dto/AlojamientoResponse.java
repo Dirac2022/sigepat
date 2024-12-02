@@ -23,7 +23,7 @@ public class AlojamientoResponse {
     /**
      * Se usa para devolver la informacion requerida de alguna petición
      */
-    private Long idAlojamiento;    
+    private Long idAlojamiento;
     private double precio;
     private boolean cancelable;
     private boolean modificable;

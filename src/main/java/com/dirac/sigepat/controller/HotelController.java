@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * HotelController es un controlador REST que maneja peticiones
@@ -100,13 +101,15 @@ public class HotelController {
     }
 
     @GetMapping("/findByCity")
-    public ResponseEntity<?> findHotelsByCity(@RequestBody Optional<HotelRequest> hotelRequest) {
-        logger.info(">findHotelsByCity " + hotelRequest.toString());
+    //public ResponseEntity<?> findHotelsByCity(@RequestBody Optional<HotelRequest> hotelRequest) {
+    public ResponseEntity<?> findHotelsByCity(@RequestParam Long idCiudad) {
+        // logger.info(">findHotelsByCity " + hotelRequest.toString());
+        logger.info(">findHotelsByCity " + idCiudad);
         List<HotelResponse> hotelResponses;
 
         try {
             // Obtén el ID de la ciudad desde el request
-            Long idCiudad = hotelRequest.map(HotelRequest::getCiudad).orElse(null);
+            //Long idCiudad = hotelRequest.map(HotelRequest::getCiudad).orElse(null);
 
             if (idCiudad == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)

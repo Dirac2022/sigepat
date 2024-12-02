@@ -69,4 +69,10 @@ public class Hotel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ciudad", referencedColumnName = "id_ciudad")
     private Ciudad ciudad;
+    
+    @Column(name = "cancelable", nullable = false)
+    private boolean cancelable;
+    
+    @Column(name = "modificable", nullable = false)
+    private boolean modificable;
 }

@@ -28,6 +28,8 @@ public class HotelResponse {
     private int habitIndDisponibles;
     private int habitDobDisponibles;
     private Ciudad ciudad;
+    private boolean cancelable;
+    private boolean modificable;
     
     public static HotelResponse fromEntity(Hotel hotel) {
         return HotelResponse.builder()
@@ -38,6 +40,8 @@ public class HotelResponse {
                 .habitIndDisponibles(hotel.getHabitIndDisponibles())
                 .habitDobDisponibles(hotel.getHabitDobDisponibles())
                 .ciudad(hotel.getCiudad())
+                .cancelable(hotel.isCancelable())
+                .modificable(hotel.isModificable())
                 .build();
     }
     

@@ -28,6 +28,15 @@ public class Alojamiento extends Servicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_alojamiento")
     private Long idAlojamiento;
+    
+    @Column(name = "precio")
+    private double precio;
+    
+    @Column(name = "cancelable", nullable = false)
+    private boolean cancelable;
+    
+    @Column(name = "modificable", nullable = false)
+    private boolean modificable;
 
     @Column(name = "noches")
     private int noches;

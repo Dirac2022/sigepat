@@ -22,4 +22,6 @@ public class HotelRequest {
     private int habitIndDisponibles;
     private int habitDobDisponibles;
     private Long ciudad;
+    private boolean cancelable;
+    private boolean modificable;
 }
