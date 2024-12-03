@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class VueloResponse {
     
     private Long idVuelo;
+    private double precio;
     private LocalDateTime fechaHoraIda;
     private LocalDateTime fechaHoraRegreso;
     private Ciudad cuidadOrigen;
@@ -34,6 +35,7 @@ public class VueloResponse {
     public static VueloResponse fromEntity(Vuelo vuelo) {
         return VueloResponse.builder()
                 .idVuelo(vuelo.getIdVuelo())
+                .precio(vuelo.getPrecio())
                 .fechaHoraIda(vuelo.getFechaHoraIda())
                 .fechaHoraRegreso(vuelo.getFechaHoraRegreso())
                 .cuidadOrigen(vuelo.getCuidadOrigen())

@@ -27,6 +27,7 @@ import lombok.NoArgsConstructor;
 public class VueloRequest {
     
     private Long idVuelo;
+    private double precio;
     private LocalDateTime fechaHoraIda;
     private LocalDateTime fechaHoraRegreso;
     private Long cuidadOrigen;

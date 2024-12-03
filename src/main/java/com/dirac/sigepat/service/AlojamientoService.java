@@ -42,7 +42,6 @@ public class AlojamientoService {
         return AlojamientoResponse.fromEntity(alojamientoRepository.findById(id).get());
     }
     
-    
     public AlojamientoResponse insertAlojamiento(AlojamientoRequest alojamientoRequest) {
         
         Long idHotel = alojamientoRequest.getHotel();
@@ -71,8 +70,7 @@ public class AlojamientoService {
        
        AlojamientoResponse alojamientoResponse = AlojamientoResponse.fromEntity(alojamiento);
        
-       return alojamientoResponse;
-               
+       return alojamientoResponse;        
    }
     
 }

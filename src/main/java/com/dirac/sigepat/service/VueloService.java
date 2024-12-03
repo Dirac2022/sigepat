@@ -118,6 +118,7 @@ public class VueloService {
         
         Vuelo vuelo = new Vuelo(
                 vueloRequest.getIdVuelo(), 
+                vueloRequest.getPrecio(),
                 vueloRequest.getFechaHoraIda(), 
                 vueloRequest.getFechaHoraRegreso(), 
                 ciudadOrigen, 

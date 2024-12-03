@@ -29,6 +29,9 @@ public class Vuelo extends Servicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_vuelo")
     private Long idVuelo;
+    
+    @Column(name = "precio")
+    private double precio;
 
     @Column(name = "fechahora_ida")
     private LocalDateTime fechaHoraIda;
