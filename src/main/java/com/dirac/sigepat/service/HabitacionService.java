@@ -4,9 +4,7 @@
  */
 package com.dirac.sigepat.service;
 
-import com.dirac.sigepat.dto.HabitacionRequest;
 import com.dirac.sigepat.dto.HabitacionResponse;
-import com.dirac.sigepat.model.Habitacion;
 import com.dirac.sigepat.model.Hotel;
 import com.dirac.sigepat.repository.HabitacionRepository;
 import com.dirac.sigepat.repository.HotelRepository;
@@ -38,10 +36,8 @@ public class HabitacionService {
      */
     public List<HabitacionResponse> listHabitaciones() {
         
-        return HabitacionResponse.fromEntities(habitacionRepository.findAll());
-        
+        return HabitacionResponse.fromEntities(habitacionRepository.findAll()); 
     }
-    
     
     
     /**
@@ -80,44 +76,5 @@ public class HabitacionService {
         // NoSuchElementException si el hotel con ese ID no existe
         return HabitacionResponse.fromEntity(habitacionRepository.findById(id).get());
     } 
-    
-    
-    /**
-     * Se encarga de insertar un nuevo hotel en la base de datos
-     * usando los datos del HotelRequest
-     * @param habitacionRequest
-     * @return 
-     */
-    public HabitacionResponse insertHabitacion(HabitacionRequest habitacionRequest) {
-
-        Long idHotel = habitacionRequest.getHotel();
-        
-        Hotel hotel = hotelRepository.findById(idHotel).get();
-        
-        // Registra un mensaje en los logs con los detalles de la
-        // iudad seleccionada para el hotel
-        logger.info("insertHabitacion-hotel" + hotel.toString());
-        
-        // Si la ciudad es null devuelve un HoteResponse vacio
-        // este bloque no se ejecutara ya que se ejecutara una excepcion
-        if (hotel == null)
-            return new HabitacionResponse();
-        
-        // Creamos la nueva instancia de Hotel a partir
-        // del objeto hotelRequest
-        
-        Habitacion habitacion = new Habitacion (
-                habitacionRequest.getIdHabitacion(),
-                habitacionRequest.getTipoHabitacion(),
-                habitacionRequest.getPrecioDia(),
-                hotel
-        );
-        
-        habitacion = habitacionRepository.save(habitacion);
-        
-        HabitacionResponse habitacionResponse = HabitacionResponse.fromEntity(habitacion);
-        
-        return habitacionResponse;
-    }
     
 }
