@@ -25,6 +25,7 @@ public class PaqueteTuristicoResponse {
     private double precioTotal;
     private Alojamiento alojamiento;
     private Vuelo vuelo;
+    private String email;
     
         public static PaqueteTuristicoResponse fromEntity(PaqueteTuristico paqueteTuristico) {
         return PaqueteTuristicoResponse.builder()

@@ -19,5 +19,6 @@ public class PaqueteTuristicoRequest {
     private double precioTotal;
     private Long alojamiento;
     private Long vuelo;
+    private String email;
 
 }

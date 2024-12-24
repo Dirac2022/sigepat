@@ -44,6 +44,7 @@ public class PaqueteTuristicoService {
         
         Long idAlojamiento = paqueteTuristicoRequest.getAlojamiento();
         Long idVuelo = paqueteTuristicoRequest.getVuelo();
+        String email = paqueteTuristicoRequest.getEmail();
         
         
         Alojamiento alojamiento = alojamientoRepository.findById(idAlojamiento).get();
@@ -58,7 +59,8 @@ public class PaqueteTuristicoService {
                 null,
                 precio,
                 alojamiento,
-                vuelo
+                vuelo,
+                email
         );
        
        paqueteTuristico = paqueteTuristicoRepository.save(paqueteTuristico);

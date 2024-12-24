@@ -42,4 +42,7 @@ public class PaqueteTuristico {
     @JoinColumn(name = "vuelo", referencedColumnName = "id_vuelo")
     private Vuelo vuelo;
     
+    @Column(name="email", nullable = false)
+    private String email;
+    
 }
