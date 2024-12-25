@@ -22,25 +22,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name="cliente")
 public class Cliente {
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id_cliente")
     private Long idCliente;
+    
     @Column(name="nombres")
     private String nombres;
+    
     @Column(name="apellido_paterno")
     private String apePaterno;
+    
     @Column(name="apellido_materno")
     private String apeMaterno;
+    
     @Column(name="fecha_nac")
     private Date fechaNac;
+    
     @Column(name="sexo")
     private String sexo;
+    
     @Column(name="email")
     private String email;
+    
     @Column(name="numcelular")
     private String numCelular;
-    @Column(name="password_cliente")
-    private String passwordliente;
     
 }

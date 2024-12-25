@@ -15,16 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author mitch
- */
-
-/**
- * Gestiona las llamadas al repositorio
- * @author mitch
- */
-
 
 @Service
 public class ClienteService {
@@ -62,8 +52,7 @@ public class ClienteService {
                 clienteRequest.getFechaNac(),
                 clienteRequest.getSexo(),
                 clienteRequest.getEmail(),
-                clienteRequest.getNumCelular(),
-                clienteRequest.getPasswordliente()
+                clienteRequest.getNumCelular()
         );
         
         cliente = clienteRepository.save(cliente);
@@ -80,4 +69,24 @@ public class ClienteService {
     public void deleteCliente(Long id) {
         clienteRepository.deleteById(id);
     }
+    
+    
+    public Cliente registrarClienteSiNoExiste(String email, String nombres, String apePaterno, String apeMaterno) {
+        logger.info("registrarClienteSiNoExiste> email: {}", email);
+        
+        return clienteRepository.findByEmail(email)
+                .orElseGet(() -> {
+                    Cliente newCliente = new Cliente();
+                    newCliente.setEmail(email);
+                    newCliente.setNombres(nombres);
+                    newCliente.setApePaterno(apePaterno);
+                    newCliente.setApeMaterno(apeMaterno);
+                    newCliente.setFechaNac(null);
+                    newCliente.setSexo(null);
+                    newCliente.setNumCelular(null);
+                    logger.info("Registrando nuevo cliente {}", newCliente);
+                    return clienteRepository.save(newCliente);
+                });
+    }
+    
 }

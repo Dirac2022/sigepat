@@ -25,6 +25,5 @@ public class ClienteRequest {
     private String sexo;
     private String email;
     private String numCelular;
-    private String passwordliente;
     
 }

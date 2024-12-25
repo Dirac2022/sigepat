@@ -40,7 +40,6 @@ public class ClienteResponse {
                 .sexo(cliente.getSexo())
                 .email(cliente.getEmail())
                 .numCelular(cliente.getNumCelular())
-                .passwordliente(cliente.getPasswordliente())
                 .build();
     }
     

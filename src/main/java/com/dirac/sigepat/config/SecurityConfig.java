@@ -17,7 +17,7 @@ public class SecurityConfig {
         http
             .csrf().disable()
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/", "/swagger-ui/**", "/v3/api-docs/**", "/api/v1/**").permitAll()
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth -> oauth
@@ -25,6 +25,10 @@ public class SecurityConfig {
                 .failureUrl("/api/auth/failure") // Redirección tras fallo
             );
 
+        //.requestMatchers("/api/auth/**").permitAll()
+        //.requestMatchers("/", "/public/**").permitAll()
+        //.requestMatchers("/", "/index.html", "/swagger-ui/**").permitAll()
+        // .requestMatchers("/", "/index.html").permitAll()
         return http.build();
     }
 }
